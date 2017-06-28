@@ -99,3 +99,16 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+alembic.ini
+/alembic
+run.pyc
+buckeT/__pycache__
+buckeT/database_models.pyc
+buckeT/bucketlist.pyc
+buckeT/__init__.pyc
+buckeT/tests/__init__.pyc
+buckeT/tests/base_test_class.pyc
+buckeT/tests/test_bucketlist.pyc
+buckeT/tests/test_login_user.pyc
+buckeT/tests/test_register_user.pyc
