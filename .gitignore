@@ -112,3 +112,6 @@ buckeT/tests/base_test_class.pyc
 buckeT/tests/test_bucketlist.pyc
 buckeT/tests/test_login_user.pyc
 buckeT/tests/test_register_user.pyc
+buckeT/__init__.py
+buckeT/.DS_Store
+.DS_Store
