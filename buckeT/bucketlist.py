@@ -42,6 +42,24 @@ class RegisterUser(Resource):
         except:
             return {'message': 'User not registered due to errors!'}, 400
 
+class LoginUser(Resource):
+    """login a user"""
+
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('email', required=True, type=str, help='please enter an email address!')
+        parser.add_argument('password', required=True, type=str, help='please enter a password!')
+        args = parser.parse_args()
+        email, password = args['email'], args['password']
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if user.verify_password(password):
+                token = {'access_token': create_access_token(identity=user.email)}
+                return {'message': 'Successfully logged in', 'token': token }, 200
+            else:
+                return {'message': 'Wrong password!'}, 401
+        else:
+            return {'message': 'User does not exist!'}, 401
 
 if __name__ == '__main__':
     app.run(debug=True)
