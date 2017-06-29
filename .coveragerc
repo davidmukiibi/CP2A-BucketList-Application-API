@@ -1,0 +1,13 @@
+[report]
+omit = 
+    *site-packages/*
+    *__init__.py*
+    *tests/__init__.py*
+    *alembic.ini*
+    *requirements.txt*
+    *buckeT/.DS_Store*
+    *.gitignore*
+    *.vscode/*
+    *.coverage*
+    */tests/*
+    *manage.py*
