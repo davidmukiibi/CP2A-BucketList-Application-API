@@ -55,7 +55,7 @@ class LoginUser(Resource):
         if user:
             if user.verify_password(password):
                 token = {'access_token': create_access_token(identity=user.email)}
-                return {'message': 'Successfully logged in', 'token': token }, 200
+                return {'message': 'Successfully logged in', 'token': token }, 201
             else:
                 return {'message': 'Wrong password!'}, 401
         else:
