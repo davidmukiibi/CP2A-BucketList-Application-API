@@ -114,3 +114,4 @@ buckeT/tests/test_login_user.pyc
 buckeT/tests/test_register_user.pyc
 buckeT/.DS_Store
 .DS_Store
+.env
