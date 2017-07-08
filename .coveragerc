@@ -11,3 +11,22 @@ omit =
     *.coverage*
     */tests/*
     *manage.py*
+    *uuid.py*
+    *encodings/latin_1.py*
+    *encodings/unicode_escape.py*
+    *hmac.py*
+    *htmlentitydefs.py*
+    *httplib.py*
+    *mimetools.py*
+    *mimetypes.py*
+    *numbers.py*
+    *rfc822.py*
+    *stringprep.py*
+    *urllib2.py*
+    *_LWPCookieJar.py*
+    *_MozillaCookieJar.py*
+    *bisect.py*
+    *cookielib.py*
+    */ctypes/*
+    *decimal.py*
+    */encodings/*
