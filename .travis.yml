@@ -12,7 +12,7 @@ install:
 
 before_script:
   - sudo -u postgres createdb jamaica
-  - sudo -u postgres createdb testing_database
+  - sudo -u postgres createdb test_database
 
 # command to run the tests
 script:
