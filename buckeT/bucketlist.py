@@ -241,5 +241,70 @@ class Bucketlist(Resource):
             return {'message': 'No bucket lists at the moment!'}, 200
 
 
+class BucketlistItem(Resource):
+    """class responsible for creating bucket list items"""
+
+    @jwt_required
+    def post(self, ID):
+        """Method/view creates an item and adds it to a bucket list"""
+
+        bucketlist = BucketList.query.filter_by(id=ID).first()
+        if bucketlist:
+            parser = reqparse.RequestParser()
+            parser.add_argument('name', required=True, type=str, help='please enter an item name!')
+            args = parser.parse_args()
+            item_name = args['name']
+            if item_name:
+                new_item = BucketListItem(name=item_name)
+                new_item.bucket_list_it_belongs_to = bucketlist.name
+                new_item.save()
+                return {'message': 'Item saved successfully.'}, 201
+            else:
+                return {'message': 'Please provide an item name'}, 200
+        else:
+            return {'message': 'Bucket list you are trying to add to does not exist'}, 404
+
+class SingleBucketlistItem(Resource):
+    """Class works on a single item"""
+
+    @jwt_required
+    def put(self, ID_bucket, ID_item):
+        """This view edits a given bucket list item"""
+
+        bucketlist = BucketList.query.filter_by(id=ID_bucket).first()
+        if bucketlist:
+            items = BucketListItem.query.filter_by(bucket_list_it_belongs_to=bucketlist.name).all()
+            for item in items:
+                if item.id == ID_item:
+                    parser = reqparse.RequestParser()
+                    parser.add_argument('name', required=True, type=str,
+                                        help='please enter an item name!')
+                    args = parser.parse_args()
+                    item_name = args['name']
+                    if item_name:
+                        item.name = item_name
+                        item.save()
+                        return {'message': 'Item edited successfully.'}, 201
+                    else:
+                        return {'message': 'Please provide an item name.'}, 200
+                else:
+                    return {'message': 'No item with the given ID!'}, 404
+        else:
+            return {'message': 'Bucket list with that ID doesnt exist!'}, 404
+
+    @jwt_required
+    def delete(self, ID_bucket, ID_item):
+        """This view deletes a gicen bucket list item."""
+
+        bucketlist = BucketList.query.filter_by(id=ID_bucket).first()
+        items = BucketListItem.query.filter_by(bucket_list_it_belongs_to=bucketlist.name).all()
+        for item in items:
+            if item.id == ID_item:
+                item.delete()
+                return {'message': 'Item has been deleted successfully!'}, 200
+            else:
+                return {'message': 'No item found with that ID!'}, 404
+
+
 if __name__ == '__main__':
     app.run(debug=True)
