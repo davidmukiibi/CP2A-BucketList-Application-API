@@ -11,7 +11,7 @@ install:
   - pip install coverage
 # command to run the app
 script:
-  - nosetests --with-coverage tests
+  - nosetests --with-coverage buckeT/tests
 
 after_success:
   - coveralls
