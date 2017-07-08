@@ -9,9 +9,19 @@ install:
   - pip install coveralls
   - pip install nose
   - pip install coverage
-# command to run the app
+
+before_script:
+  - sudo -u postgres createdb jamaica
+  - sudo -u postgres createdb testing_database
+
+# command to run the tests
 script:
   - nosetests --with-coverage
+
+after_script:
+  - psql -U postgres
+  - dropdb jamaica
+  - dropdb testing_database
 
 after_success:
   - coveralls
