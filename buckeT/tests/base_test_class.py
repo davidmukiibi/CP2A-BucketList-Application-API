@@ -1,112 +1,50 @@
-from unittest import TestCase
+import unittest
 from run import app
-from buckeT import db, create_app
 from instance.config import app_config
-from base64 import b64encode
-from flask import current_app, json, url_for
-from buckeT.database_models import User, BucketList, BucketListItem
+import json
+from buckeT import create_app, db, bucketlist, api
+from buckeT.bucketlist import RegisterUser, LoginUser, Bucketlist, BucketlistItem, SingleBucketlist, SingleBucketlistItem
 
 app.config.from_object(app_config["testing"])
 
-class BaseTests(TestCase):
-    """Base configurations for the testcases."""
+class BaseClass(unittest.TestCase):
+    """Parent class to hold the setup and teardown methods"""
 
     def setUp(self):
+        """setting up test dependencies"""
+
         self.test_client = app.test_client()
         self.app_context = app.app_context()
         self.app_context.push()
+        # creating testing db tables
         db.create_all()
-        self.URL = '/auth/'
+
+        # user credentials for registering user
+        registration_payload = {
+                        'first_name': 'david',
+                        'second_name': 'mukiibi',
+                        'email': 'david.mukiibi@gmail.com',
+                        'password': '1234567890'
+                    }
+
+        # user credentials for logging in user
+        login_payload = {'email': 'david.mukiibi@gmail.com',
+                        'password': '1234567890'
+                    }
+        self.test_client.post('/auth/register/', data=registration_payload)
+        login_instance = self.test_client.post('/auth/login/', data=login_payload)
+        response = json.loads(login_instance.data.decode('utf-8'))
+        self.token = response['token']['access_token']
+
+        # creating a bucketlist
+        self.new_bucketlist = {'name': 'go to jamaica once again!'}
+
+        # Bucketlist item details
+        self.new_bucketlist_item = {'name': 'book a flight'}
 
     def tearDown(self):
+        """tearing down the dependencies"""
+
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
-
-    def get_accept_content_type_headers(self):
-        return {'Accept': 'application/json', 'Content-Type': 'application/json'}
-
-    def get_authentication_headers(self, first_name, second_name, email, password):
-        authentication_headers = self.get_accept_content_type_headers()
-        authentication_headers['Authorization'] = \
-        'Basic ' + b64encode((self.test_first_name + ':' + self.test_second_name + ':' + self.test_email + ':' + self.test_password).encode('utf- 8')).decode('utf-8')
-        return authentication_headers
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #     """create test database and set up test client."""
-    #     self.test_app = app.test_client()
-    #     db.create_all()
-    #     user = User(first_name="user", second_name="name", email="user.name@gmail.com", password="username")
-
-    #     # bucketlist = Bucketlist(title="Travel",
-    #     #                         description="Places I have to visit",
-    #     #                         created_by=1)
-
-    #     # item = Item(name="Enjoy the beautiful beaches of Hawaii",
-    #     #             bucketlist_id=1)
-
-    #     db.session.add(user)
-    #     # db.session.add(bucketlist)
-    #     # db.session.add(item)
-    #     db.session.commit()
-
-    # def tearDown(self):
-    #     """Destroy the database."""
-    #     db.session.remove()
-    #     db.drop_all()
