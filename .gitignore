@@ -78,9 +78,6 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# dotenv
-.env
-
 # virtualenv
 .venv
 venv/
@@ -113,4 +110,3 @@ buckeT/tests/test_login_user.pyc
 buckeT/tests/test_register_user.pyc
 buckeT/.DS_Store
 .DS_Store
-.env
