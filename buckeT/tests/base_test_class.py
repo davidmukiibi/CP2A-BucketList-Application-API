@@ -39,7 +39,7 @@ class BaseClass(unittest.TestCase):
         # creating a bucketlist
         self.new_bucketlist = {'name': 'go to jamaica once again!'}
 
-        # Bucketlist item details
+        # Bucketlist item details for item creation
         self.new_bucketlist_item = {'name': 'book a flight'}
 
     def tearDown(self):
