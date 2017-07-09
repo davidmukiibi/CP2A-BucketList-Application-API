@@ -20,8 +20,8 @@ script:
 
 after_script:
   - psql -U postgres
-  - dropdb jamaica
-  - dropdb testing_database
+  - travis_wait dropdb jamaica
+  - travis_wait dropdb testing_database
 
 after_success:
   - coveralls
