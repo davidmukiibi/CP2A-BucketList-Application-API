@@ -16,7 +16,8 @@ before_script:
 
 # command to run the tests
 script:
-  - nosetests --with-coverage
+  - nosetests
+  - coverage report
 
 after_script:
   - psql -U postgres
