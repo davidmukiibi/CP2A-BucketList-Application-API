@@ -62,3 +62,17 @@ class TestRegisterUser(BaseClass):
         new_data2 = json.loads(response2.data.decode('utf-8'))
         self.assertTrue(response2.status_code == 409)
         self.assertTrue(new_data2['message'] == 'User you are entering already exists!')
+
+    def test_password_length(self):
+        
+        new_user = {
+                        'first_name': 'david',
+                        'second_name': 'mukiibi',
+                        'email': 'david.mukiibi@gmail.com',
+                        'password': '123456'
+                    }
+        get_response = self.test_client.post(self.url_prefix + '/auth/register/', data=new_user})
+        get_data = json.loads(get_response.data.decode('utf-8'))
+
+        self.assertTrue(get_response.status_code, 400)
+        self.assertTrue(get_data['message'] == 'Password should be longer than 8 characters!')
