@@ -2,9 +2,6 @@ import os
 from buckeT import app, api
 from buckeT.bucketlist import RegisterUser, LoginUser, Bucketlist, BucketlistItem, SingleBucketlist, SingleBucketlistItem
 
-config_name = os.getenv('APP_SETTINGS') # config_name = "development"
-
-
 
 api.add_resource(RegisterUser, '/auth/register/')
 api.add_resource(LoginUser, '/auth/login/')
