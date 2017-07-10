@@ -255,10 +255,21 @@ class BucketlistItem(Resource):
             args = parser.parse_args()
             item_name = args['name']
             if item_name:
-                new_item = BucketListItem(name=item_name)
-                new_item.bucket_list_it_belongs_to = bucketlist.name
-                new_item.save()
-                return {'message': 'Item saved successfully.'}, 201
+                single_item = BucketListItem.query.filter_by(bucket_list_it_belongs_to=bucketlist.name).all()
+                if single_item:
+                    for an_item in single_item:
+                        if an_item.name != item_name:
+                            new_item = BucketListItem(name=item_name)
+                            new_item.bucket_list_it_belongs_to = bucketlist.name
+                            new_item.save()
+                            return {'message': 'Item saved successfully.'}, 201
+                        else:
+                            return {'message': 'The item you are trying to add already exists!'}, 409
+                else:
+                    new_item = BucketListItem(name=item_name)
+                    new_item.bucket_list_it_belongs_to = bucketlist.name
+                    new_item.save()
+                    return {'message': 'Item saved successfully.'}, 201
             else:
                 return {'message': 'Please provide an item name'}, 400
         else:
