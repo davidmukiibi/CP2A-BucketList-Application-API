@@ -37,7 +37,7 @@ class RegisterUser(Resource):
                 return {'message': 'Password should not be empty!'}, 400
             if len(args['password']) < 8:
                 return {
-    'message': "Password should be longer than 8 characters!"}
+    'message': "Password should be longer than 8 characters!"}, 400
 
             new_user = User(first_name=args['first_name'], second_name=args['second_name'],
                             email=args['email'], password=args['password'])
