@@ -38,7 +38,6 @@ class TestBucketListItem(BaseClass):
 
         bucketlist_item_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=faulty_buckelist_item,
                                  headers={"Authorization": 'Bearer ' + self.token})
-        print bucketlist_item_response
         self.assertTrue(bucketlist_item_response.status_code == 400)
 
         new_data = json.loads(bucketlist_item_response.data.decode('utf-8'))
@@ -179,7 +178,6 @@ class TestBucketListItem(BaseClass):
         bucketlist_item_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_response.status_code == 201)
-        print  bucketlist_item_response
         another_bucketlist_item_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(another_bucketlist_item_response.status_code == 409)

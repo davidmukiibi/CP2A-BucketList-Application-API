@@ -37,8 +37,6 @@ class TestRegisterUser(BaseClass):
         }
         response = self.test_client.post(self.url_prefix + '/auth/register/', data=data)
         new_data = json.loads(response.data.decode('utf-8'))
-        print response.status_code
-        print new_data['message']
         self.assertTrue(response.status_code == 400)
         self.assertTrue(new_data['message'] == 'First name should not be empty!')
 
