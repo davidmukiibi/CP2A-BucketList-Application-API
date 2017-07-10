@@ -168,3 +168,21 @@ class TestBucketListItem(BaseClass):
         bucketlist_item_delete_response = self.test_client.delete('/api/bucketlist/v1/bucketlists/1/items/2',
                                 headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_delete_response.status_code == 404)
+
+    def test_adding_item_that_already_exists(self):
+        """testing that adding an item that already exists doesnt happen"""
+
+        bucketlist_response = self.test_client.post(self.url_prefix + '/bucketlists/', data=self.new_bucketlist,
+                                 headers={"Authorization": 'Bearer ' + self.token})
+        self.assertTrue(bucketlist_response.status_code == 201)
+
+        bucketlist_item_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
+                                 headers={"Authorization": 'Bearer ' + self.token})
+        self.assertTrue(bucketlist_item_response.status_code == 201)
+        print  bucketlist_item_response
+        another_bucketlist_item_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
+                                 headers={"Authorization": 'Bearer ' + self.token})
+        self.assertTrue(another_bucketlist_item_response.status_code == 409)
+
+        new_data = json.loads(another_bucketlist_item_response.data.decode('utf-8'))
+        self.assertTrue('The item you are trying to add already exists!' == new_data['message'])
