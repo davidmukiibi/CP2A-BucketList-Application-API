@@ -18,6 +18,5 @@ def create_app(config_name):
 
     return app
 
-
 app = create_app('development')
-api = Api(app=app)
+api = Api(app=app, prefix="/api/bucketlist/v1")
