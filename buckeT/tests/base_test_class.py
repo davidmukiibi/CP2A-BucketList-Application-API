@@ -20,7 +20,7 @@ class BaseClass(unittest.TestCase):
         db.create_all()
 
         # user credentials for registering user
-        registration_payload = {
+        self.registration_payload = {
                         'first_name': 'david',
                         'second_name': 'mukiibi',
                         'email': 'david.mukiibi@gmail.com',
@@ -28,11 +28,11 @@ class BaseClass(unittest.TestCase):
                     }
 
         # user credentials for logging in user
-        login_payload = {'email': 'david.mukiibi@gmail.com',
+        self.login_payload = {'email': 'david.mukiibi@gmail.com',
                         'password': '1234567890'
                     }
-        self.test_client.post('/auth/register/', data=registration_payload)
-        login_instance = self.test_client.post('/auth/login/', data=login_payload)
+        self.test_client.post('/api/bucketlist/v1/auth/register/', data=self.registration_payload)
+        login_instance = self.test_client.post('/api/bucketlist/v1/auth/login/', data=self.login_payload)
         response = json.loads(login_instance.data.decode('utf-8'))
         self.token = response['token']['access_token']
 
@@ -41,6 +41,8 @@ class BaseClass(unittest.TestCase):
 
         # Bucketlist item details for item creation
         self.new_bucketlist_item = {'name': 'book a flight'}
+
+        self.url_prefix = '/api/bucketlist/v1'
 
     def tearDown(self):
         """tearing down the dependencies"""
