@@ -140,7 +140,11 @@ class TestBucketList(BaseClass):
         self.assertEqual(get_response.status_code, 200)
 
 
-
+    def test_fetching_bucketlists_without_logging_in(self):
+        get_response = self.test_client.get(self.url_prefix + '/bucketlists/1',
+                                headers={"Authorization": ''})
+        get_data = json.loads(get_response.data.decode('utf-8'))
+        self.assertTrue(get_response.status_code, 401)
 
 
 
