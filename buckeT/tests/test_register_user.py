@@ -71,7 +71,7 @@ class TestRegisterUser(BaseClass):
                         'email': 'david.mukiibi@gmail.com',
                         'password': '123456'
                     }
-        get_response = self.test_client.post(self.url_prefix + '/auth/register/', data=new_user})
+        get_response = self.test_client.post(self.url_prefix + '/auth/register/', data=new_user)
         get_data = json.loads(get_response.data.decode('utf-8'))
 
         self.assertTrue(get_response.status_code, 400)
