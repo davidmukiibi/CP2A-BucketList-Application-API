@@ -28,13 +28,13 @@ class RegisterUser(Resource):
                                 help='please enter a password.')
             args = parser.parse_args()
             if not args['first_name']:
-                return {'message': 'First name should not be empty!'}
+                return {'message': 'First name should not be empty!'}, 400
             if not args['second_name']:
-                return {'message': 'Second name should not be empty!'}
+                return {'message': 'Second name should not be empty!'}, 400
             if not args['email']:
-                return {'message': 'Email should not be empty!'}
+                return {'message': 'Email should not be empty!'}, 400
             if not args['password']:
-                return {'message': 'Password should not be empty!'}
+                return {'message': 'Password should not be empty!'}, 400
             if len(args['password']) < 8:
                 return {
     'message': "Password should be longer than 8 characters!"}
@@ -52,7 +52,7 @@ class RegisterUser(Resource):
                     return {'message': 'Sucessfully registered new user!'}, 201
                 else:
                     return {'message': 'first name or second name can not contain\
-                                        special characters or numbers!'}, 409
+                                        special characters or numbers!'}, 400
 
         except:
             return {'message': 'User not registered due to errors!'}, 400
@@ -74,9 +74,9 @@ class LoginUser(Resource):
                 token = {'access_token': create_access_token(identity=user.email)}
                 return {'message': 'Successfully logged in', 'token': token }, 201
             else:
-                return {'message': 'Wrong password!'}, 401
+                return {'message': 'Wrong password!'}, 400
         else:
-            return {'message': 'User does not exist!'}, 401
+            return {'message': 'User does not exist!'}, 404
 
 class SingleBucketlist(Resource):
     """Class responsible for fetching, editing and deleting a specific bucket
@@ -142,7 +142,7 @@ class SingleBucketlist(Resource):
                 return {'message': 'Bucket list edit successful'}, 201
 
             else:
-                return {'message': 'Please enter a name to replace the current one stored!'}, 200
+                return {'message': 'Please enter a name to replace the current one stored!'}, 400
         else:
             return {'message': 'No bucket list found with that ID'}, 404
 
@@ -167,10 +167,10 @@ class Bucketlist(Resource):
                     return {'message': '{} has been added to your pool of bucket\
                                         lists.'.format(args['name'])}, 201
                 except:
-                    return {'message': 'Bucket list already exists!'}
+                    return {'message': 'Bucket list already exists!'}, 409
             else:
                     return {'message': 'Bucketlist name can not contain\
-                                        special characters or numbers!'}, 409
+                                        special characters or numbers!'}, 400
         else:
             return {'message': 'Please provide a name for the bucket list.'}, 400
 
@@ -238,7 +238,7 @@ class Bucketlist(Resource):
             return jsonify({'buckets': buckets}, 200)
 
         else:
-            return {'message': 'No bucket lists at the moment!'}, 200
+            return {'message': 'No bucket lists at the moment!'}, 404
 
 
 class BucketlistItem(Resource):
@@ -260,7 +260,7 @@ class BucketlistItem(Resource):
                 new_item.save()
                 return {'message': 'Item saved successfully.'}, 201
             else:
-                return {'message': 'Please provide an item name'}, 200
+                return {'message': 'Please provide an item name'}, 400
         else:
             return {'message': 'Bucket list you are trying to add to does not exist'}, 404
 
@@ -286,7 +286,7 @@ class SingleBucketlistItem(Resource):
                         item.save()
                         return {'message': 'Item edited successfully.'}, 201
                     else:
-                        return {'message': 'Please provide an item name.'}, 200
+                        return {'message': 'Please provide an item name.'}, 400
                 else:
                     return {'message': 'No item with the given ID!'}, 404
         else:
@@ -305,6 +305,3 @@ class SingleBucketlistItem(Resource):
             else:
                 return {'message': 'No item found with that ID!'}, 404
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
