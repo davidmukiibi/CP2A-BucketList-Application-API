@@ -16,6 +16,7 @@ before_script:
 
 # command to run the tests
 script:
+  - nosetests
   - nosetests --with-coverage
 
 after_script:
