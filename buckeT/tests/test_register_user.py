@@ -76,3 +76,18 @@ class TestRegisterUser(BaseClass):
 
         self.assertTrue(get_response.status_code, 400)
         self.assertTrue(get_data['message'] == 'Password should be longer than 8 characters!')
+
+    def test_email_validation(self):
+        """Testing email validation"""
+        
+        new_user = {
+                        'first_name': 'david',
+                        'second_name': 'mukiibi',
+                        'email': 'davidmukiibigmail',
+                        'password': '123456'
+                    }
+        post_response = self.test_client.post(self.url_prefix + '/auth/register/', data=new_user)
+        post_data = json.loads(post_response.data.decode('utf-8'))
+
+        self.assertTrue(post_response.status_code, 400)
+        self.assertTrue(post_data['message'] == 'Wrong email entered!')
