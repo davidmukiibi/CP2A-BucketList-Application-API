@@ -31,7 +31,7 @@ class BaseClass(unittest.TestCase):
         self.login_payload = {'email': 'david.mukiibi@gmail.com',
                         'password': '1234567890'
                     }
-        self.url_prefix = "/api/v1"
+        self.url_prefix = '/api/v1'
 
         self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
         login_instance = self.test_client.post(self.url_prefix + '/auth/login/', data=self.login_payload)
