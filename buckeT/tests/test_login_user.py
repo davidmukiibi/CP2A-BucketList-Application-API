@@ -35,13 +35,12 @@ class TestLoginUser(BaseClass):
     def test_logging_in_user_without_password(self):
         """test logging in user with missing password"""
         data2 = {
-            'email': 'david.mukiibiq@gmail.com',
+            'email': 'david.mukiibi@yahoo.com',
             'password': ''
         }
         self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
         response = self.test_client.post(self.url_prefix + '/auth/login/', data=data2)
         new_data = json.loads(response.data.decode('utf-8'))
-        print new_data['message']
         self.assertTrue(response.status_code == 400)
         self.assertTrue(new_data['message'] == 'Wrong password!')
 
