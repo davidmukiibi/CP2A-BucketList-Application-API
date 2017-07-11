@@ -2,79 +2,265 @@ FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
 
 # mybucketlist
+This is a bucket list API built with [Flask](http://flask.pocoo.org/).
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+This feature rich API requires token based authentication to access all resources except login and register.
+It also has pagination and search capabilities on the resources requested.
 
-## Questions Collection [/questions]
 
-### List All Questions [GET]
+The features attached to the service include:
+* Registering a user.
+* Logging in a user.
+* Creating a new bucketlist after user authentication.
+* Creating new bucketlist items on a given bucketlist after user authentication.
+* Updating and deleting the bucketlists.
+* Updating and deleting the items.
+* Retrieving a list of all created bucketlists with their items, by a specific registered user.
 
-+ Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+## User Authentication
 
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+### Registration [/api/v1/auth/register/]
+### Register a new user [POST]
+Fill in your first name, second name, email address, and password longer than 8 characters.
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "first_name": "Lana",
+            "second_name": "Rose",
+            "email": "lana.rose@gmail.com",
+            "password": "1234567890"
         }
 
 + Response 201 (application/json)
 
+        {
+            "message": "Successfully registered new user!"
+        }
+
+### Login [/api/v1/auth/login/]
+### Login a user [POST]
+
+Use your correct email and password combination to verify your identity.
+Do take note of the token returned on successful login as it will be required
+to access other resources.
+You could copy it somewhere as you will need it.
+
++ Request (application/json)
+
+        {
+            "email": "lana.rose@gmail.com",
+            "password": "1234567890"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "message": "Successfully logged in",
+            "token": {
+                "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2NsYWltcyI6e30sImp0aSI6IjZiZmY4NGI0LTlkMTUtNGY5My05YTNlLTk3MmMxNWIwZGQ3NyIsImV4cCI6MTQ5OTc1OTg4MiwiZnJlc2giOmZhbHNlLCJpYXQiOjE0OTk3NTg5ODIsInR5cGUiOiJhY2Nlc3MiLCJuYmYiOjE0OTk3NTg5ODIsImlkZW50aXR5IjoiZGF2aS5jcnNvQGdtYWlsLmNvbSJ9.Gc5OnsBA_xD2i8Buyc9nSKDM6WK2rnjnPl6jBLeBv2E"
+            }
+        }
+
+The above token is an example of what will be returned, that actual token will not work if you try using it.
+
+## Group Resources
+
+### Bucketlist Resources [/api/v1/bucketlists/]
+
+### Create a new bucketlist [POST]
+Add a new bucketlist.
+
++ Request (application/json)
+
     + Headers
 
-            Location: /questions/2
+            Authorization: Bearer 'token goes here'
+
+Mind the space between the word 'Bearer' and the token.
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+                "name": "Go to Jamaica"
+            }
+
++ Response 201 (application/json)
+
+            {
+                "message": "Go to Jamaica has been added to your pool of bucket                                        lists."
+            }
+
+### List all bucketlists [GET]
+Retrieve all bucketlists belonging to a logged in user.
+Login first, then:
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer 'token goes here'
+
++ Response 200 (application/json)
+
+            [
+                {
+                    "buckets": [
+                        {
+                            "created_by": "davi.crso@gmail.com",
+                            "date_created": "Tue, 11 Jul 2017 12:33:54 GMT",
+                            "date_modified": "Tue, 11 Jul 2017 12:33:54 GMT",
+                            "id": 22,
+                            "items": [],
+                            "name": "Go to Jamaica"
+                        }
+                    ]
+                },
+                200
+            ]
+
+
+### Single BucketList retrieval [/api/v1/bucketlists/ID]
+
+The Id must be an integer.
+
+## Get a single bucketlist[GET]
+
++ Parameters
+
+    + <int:ID> (integer) - ID of the required bucketlist
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer "token goes here"
+
++ Response 200 (application/json)
+
+            [
+                {
+                  "bucket list": {
+                      "created_by": "davi.crso@gmail.com",
+                      "date_created": "Tue, 11 Jul 2017 12:33:54 GMT",
+                      "date_modified": "Tue, 11 Jul 2017 12:33:54 GMT",
+                      "id": 22,
+                      "items": [],
+                      "name": "Go to Jamaica"
+                  }
+                  },
+            200
+            ]
+
+## Update a single bucketlist[PUT] [/api/v1/bucketlists/ID]
++ Parameters
+
+    + <int:ID> (integer) - ID of the required bucketlist to edit
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer "token goes here"
+
+    + Body
+
+            {
+                "name": "Go to America",
+            }
+
++ Response 201 (application/json)
+
+            {
+            "message": "Bucket list edit successful"
+            }
+
+
+## Delete a bucketlist[DELETE] [/api/v1/bucketlists/ID]
++ Parameters
+
+    + <int:ID> (integer) - ID of the required bucketlist to delete
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer "token goes here"
+
++ Response 200 (application/json)
+
+        {
+        "message": "Bucketlist deleted successfully"
+        }
+
+### BucketList Item creation [/bucketlist/ID/items/]
+
+## Add a new bucketlist item [POST]
+
++ Parameters
+
+    + <int:ID> (integer) - ID of the required bucketlist to add an item to.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer "token goes here"
+
+    + Body
+
+            {
+                "name": "collect money first"
+            }
+
++ Response 201 (application/json)
+
+            {
+            "message": "Item saved successfully."
+            }
+
+### BucketListItem manipulation [/bucketlist/ID/items/ID_item]
+/bucketlist/ID/items/
+
+You can update or delete the items created as you wish.
+Handy for when you finally want to cross something off your bucketlist.
+
++ Parameters
+
+    + ID (integer) - ID of the required bucketlist to add to.
+    + ID_item (integer) - ID of the required bucketlist item to work with
+
+## Update a Bucketlist item [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer "token goes here"
+
+    + Body
+
+            {
+                "name": "look for more money"
+            }
+
++ Response 201 (application/json)
+
+            {
+            "message": "Item edited successfully."
+            }
+
+## Delete a bucketlist item [DELETE]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer "token goes here"
+
++ Response 200 (application/json)
+
+            {
+            "message": "Item has been deleted successfully!"
             }
