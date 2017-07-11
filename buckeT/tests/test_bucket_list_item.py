@@ -60,15 +60,15 @@ class TestBucketListItem(BaseClass):
         """testing that a bucket list item can be edited."""
 
         bucketlist_item_edits = {'name': 'go to uganda first'}
-        bucketlist_response = self.test_client.post('/api/bucketlist/v1/bucketlists/', data=self.new_bucketlist,
+        bucketlist_response = self.test_client.post(self.url_prefix + '/bucketlists/', data=self.new_bucketlist,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_response.status_code == 201)
 
-        bucketlist_item_response = self.test_client.post('/api/bucketlist/v1/bucketlists/1/items/', data=self.new_bucketlist_item,
+        bucketlist_item_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_response.status_code == 201)
 
-        bucketlist_item_edit_response = self.test_client.put('/api/bucketlist/v1/bucketlists/1/items/1', data=bucketlist_item_edits,
+        bucketlist_item_edit_response = self.test_client.put(self.url_prefix + '/bucketlists/1/items/1', data=bucketlist_item_edits,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_edit_response.status_code == 201)
 
@@ -80,15 +80,15 @@ class TestBucketListItem(BaseClass):
         """testing editing bucket list with no name given."""
 
         bucketlist_item_edits = {'name': ''}
-        bucketlist_response = self.test_client.post('/api/bucketlist/v1/bucketlists/', data=self.new_bucketlist,
+        bucketlist_response = self.test_client.post(self.url_prefix + '/bucketlists/', data=self.new_bucketlist,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_response.status_code == 201)
 
-        bucketlist_item_response = self.test_client.post('/api/bucketlist/v1/bucketlists/1/items/', data=self.new_bucketlist_item,
+        bucketlist_item_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_response.status_code == 201)
 
-        bucketlist_item_edit_response = self.test_client.put('/api/bucketlist/v1/bucketlists/1/items/1', data=bucketlist_item_edits,
+        bucketlist_item_edit_response = self.test_client.put(self.url_prefix + '/bucketlists/1/items/1', data=bucketlist_item_edits,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_edit_response.status_code == 400)
 
@@ -99,15 +99,15 @@ class TestBucketListItem(BaseClass):
         """testing editing bucketlist item that does not exist."""
 
         bucketlist_item_edits = {'name': 'go some place'}
-        bucketlist_response = self.test_client.post('/api/bucketlist/v1/bucketlists/', data=self.new_bucketlist,
+        bucketlist_response = self.test_client.post(self.url_prefix + '/bucketlists/', data=self.new_bucketlist,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_response.status_code == 201)
 
-        bucketlist_item_response = self.test_client.post('/api/bucketlist/v1/bucketlists/1/items/', data=self.new_bucketlist_item,
+        bucketlist_item_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_response.status_code == 201)
 
-        bucketlist_item_edit_response = self.test_client.put('/api/bucketlist/v1/bucketlists/1/items/2', data=bucketlist_item_edits,
+        bucketlist_item_edit_response = self.test_client.put(self.url_prefix + '/bucketlists/1/items/2', data=bucketlist_item_edits,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_edit_response.status_code == 404)
 
@@ -118,15 +118,15 @@ class TestBucketListItem(BaseClass):
         """testing editing item on non existent bucketlist."""
 
         bucketlist_item_edits = {'name': 'go some place'}
-        bucketlist_response = self.test_client.post('/api/bucketlist/v1/bucketlists/', data=self.new_bucketlist,
+        bucketlist_response = self.test_client.post(self.url_prefix + '/bucketlists/', data=self.new_bucketlist,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_response.status_code == 201)
 
-        bucketlist_item_response = self.test_client.post('/api/bucketlist/v1/bucketlists/1/items/', data=self.new_bucketlist_item,
+        bucketlist_item_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_response.status_code == 201)
 
-        bucketlist_item_edit_response = self.test_client.put('/api/bucketlist/v1/bucketlists/2/items/2', data=bucketlist_item_edits,
+        bucketlist_item_edit_response = self.test_client.put(self.url_prefix + '/bucketlists/2/items/2', data=bucketlist_item_edits,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_edit_response.status_code == 404)
 
@@ -138,19 +138,19 @@ class TestBucketListItem(BaseClass):
         """tesing that a bucketlist item can be deleted."""
 
         bucketlist_item_edits = {'name': 'go some place'}
-        bucketlist_post_response = self.test_client.post('/api/bucketlist/v1/bucketlists/', data=self.new_bucketlist,
+        bucketlist_post_response = self.test_client.post(self.url_prefix + '/bucketlists/', data=self.new_bucketlist,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_post_response.status_code == 201)
-        bucketlist_item_post_response = self.test_client.post('/api/bucketlist/v1/bucketlists/1/items/', data=self.new_bucketlist_item,
+        bucketlist_item_post_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_post_response.status_code == 201)
-        bucketlist_item_post_response = self.test_client.post('/api/bucketlist/v1/bucketlists/1/items/', data=bucketlist_item_edits,
+        bucketlist_item_post_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=bucketlist_item_edits,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_post_response.status_code == 201)
-        bucketlist_item_delete_response = self.test_client.delete('/api/bucketlist/v1/bucketlists/1/items/1',
+        bucketlist_item_delete_response = self.test_client.delete(self.url_prefix + '/bucketlists/1/items/1',
                                 headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_delete_response.status_code == 200)
-        bucketlist_item_edit_response = self.test_client.put('/api/bucketlist/v1/bucketlists/2/items/1', data=bucketlist_item_edits,
+        bucketlist_item_edit_response = self.test_client.put(self.url_prefix + '/bucketlists/2/items/1', data=bucketlist_item_edits,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_edit_response.status_code == 404)
 
@@ -158,13 +158,13 @@ class TestBucketListItem(BaseClass):
     def test_delete_a_bucket_list_item_that_doesnt_exist(self):
         """tesing deleting of a bucketlist item that does not exist."""
 
-        bucketlist_post_response = self.test_client.post('/api/bucketlist/v1/bucketlists/', data=self.new_bucketlist,
+        bucketlist_post_response = self.test_client.post(self.url_prefix + '/bucketlists/', data=self.new_bucketlist,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_post_response.status_code == 201)
-        bucketlist_item_post_response = self.test_client.post('/api/bucketlist/v1/bucketlists/1/items/', data=self.new_bucketlist_item,
+        bucketlist_item_post_response = self.test_client.post(self.url_prefix + '/bucketlists/1/items/', data=self.new_bucketlist_item,
                                  headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_post_response.status_code == 201)
-        bucketlist_item_delete_response = self.test_client.delete('/api/bucketlist/v1/bucketlists/1/items/2',
+        bucketlist_item_delete_response = self.test_client.delete(self.url_prefix + '/bucketlists/1/items/2',
                                 headers={"Authorization": 'Bearer ' + self.token})
         self.assertTrue(bucketlist_item_delete_response.status_code == 404)
 
