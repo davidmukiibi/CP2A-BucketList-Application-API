@@ -4,6 +4,7 @@ from database_models import User, BucketList, BucketListItem
 from buckeT import db, app
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
+from validate_email import validate_email
 
 parser = reqparse.RequestParser()
 parser.add_argument('q',type=str, help="Search word")
@@ -31,7 +32,10 @@ class RegisterUser(Resource):
                 return {'message': 'First name should not be empty!'}, 400
             if not args['second_name']:
                 return {'message': 'Second name should not be empty!'}, 400
-            if not args['email']:
+            if args['email']:
+                if not validate_email(args['email'],check_mx=True):
+                    return {'message': 'Wrong email entered!'}, 400
+            else:
                 return {'message': 'Email should not be empty!'}, 400
             if not args['password']:
                 return {'message': 'Password should not be empty!'}, 400
