@@ -23,7 +23,7 @@ class BaseClass(unittest.TestCase):
         self.registration_payload = {
                         'first_name': 'david',
                         'second_name': 'mukiibi',
-                        'email': 'david.mukiibi@gmail.com',
+                        'email': 'david.mukiibiq@gmail.com',
                         'password': '1234567890'
                     }
 
