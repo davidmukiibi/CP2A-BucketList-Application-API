@@ -16,11 +16,11 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
-    TESTING = os.getenv('TESTING')
-    SQLALCHEMY_DATABASE_URI = os.getenv('TESTING_SQLALCHEMY_DATABASE_URI')
-    SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv('TESTING_SQLALCHEMY_TRACK_MODIFICATIONS')
-    DEBUG = os.getenv('TESTING_DEBUG')
-    SERVER_NAME = os.getenv('TESTING_SERVER_NAME')
+    TESTING = config('TESTING')
+    SQLALCHEMY_DATABASE_URI = config('TESTING_SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = config('TESTING_SQLALCHEMY_TRACK_MODIFICATIONS')
+    DEBUG = config('TESTING_DEBUG')
+    SERVER_NAME = config('TESTING_SERVER_NAME')
 
 class StagingConfig(Config):
     """Configurations for Staging."""
