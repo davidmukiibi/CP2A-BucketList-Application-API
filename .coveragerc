@@ -30,3 +30,5 @@ omit =
     */ctypes/*
     *decimal.py*
     */encodings/*
+    *asyncore.py*
+    *smtplib.py*
