@@ -33,7 +33,7 @@ class BaseClass(unittest.TestCase):
                     }
         self.url_prefix = '/api/v1'
 
-        self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
+        print self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
         login_instance = self.test_client.post(self.url_prefix + '/auth/login/', data=self.login_payload)
         response = json.loads(login_instance.data.decode('utf-8'))
         print response
