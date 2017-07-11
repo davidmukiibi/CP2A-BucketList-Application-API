@@ -23,7 +23,7 @@ class TestRegisterUser(BaseClass):
         response = self.test_client.post(self.url_prefix + '/auth/register/', data=data)
         new_data = json.loads(response.data.decode('utf-8'))
         self.assertTrue(response.status_code == 201)
-        self.assertTrue(new_data['message'] == 'Sucessfully registered new user!')
+        self.assertTrue(new_data['message'] == 'Successfully registered new user!')
 
     def test_registering_user_without_some_fields(self):
         """test registering a user with errors in parameters"""
