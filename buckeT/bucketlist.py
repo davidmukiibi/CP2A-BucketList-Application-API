@@ -53,7 +53,7 @@ class RegisterUser(Resource):
                 if (re.match('[a-zA-Z]', args['first_name'])
                    and re.match('[a-zA-Z]', args['second_name'])):
                     new_user.save()
-                    return {'message': 'Sucessfully registered new user!'}, 201
+                    return {'message': 'Successfully registered new user!'}, 201
                 else:
                     return {'message': 'first name or second name can not contain\
                                         special characters or numbers!'}, 400
