@@ -11,16 +11,16 @@ class Config(object):
 class DevelopmentConfig(Config):
     """Configurations for Development."""
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = config('DEV_SQLALCHEMY_DATABASE_URI')
-    SECRET_KEY = config('DEV_SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/jamaica'
+    SECRET_KEY = os.getenv('DEV_SECRET_KEY')
 
 class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
-    TESTING = config('TESTING')
-    SQLALCHEMY_DATABASE_URI = config('TESTING_SQLALCHEMY_DATABASE_URI')
-    SQLALCHEMY_TRACK_MODIFICATIONS = config('TESTING_SQLALCHEMY_TRACK_MODIFICATIONS')
-    DEBUG = config('TESTING_DEBUG')
-    SERVER_NAME = config('TESTING_SERVER_NAME')
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/test_database'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    DEBUG = True
+    SERVER_NAME = 127.0.0.1:5000
 
 class StagingConfig(Config):
     """Configurations for Staging."""
