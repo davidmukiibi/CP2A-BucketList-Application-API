@@ -34,31 +34,25 @@ class RegisterUser(Resource):
                 return {'message': 'Second name should not be empty!'}, 400
             if not args['email']:
                 return {'message': 'Email should not be empty!'}, 400
+            if not validate_email(args['email'], check_mx=True):
+                return {'message': 'Wrong email entered!'}, 400
+            if not args['password']:
+                return {'message': 'Password should not be empty!'}, 400
+            if not len(args['password']) > 8:
+                return {'message': "Password should be longer than 8 characters!"}, 400
+
+            new_user = User(first_name=args['first_name'], second_name=args['second_name'],
+                            email=args['email'], password=args['password'])
+            if User.query.filter_by(email=args['email']).first():
+                return {'message': 'User you are entering already exists!'}, 409
             else:
-                if validate_email(args['email'], check_mx=True):
-                    if not args['password']:
-                        return {'message': 'Password should not be empty!'}, 400
-                    if len(args['password']) < 8:
-                        return {'message': "Password should be longer than 8 characters!"}, 400
-
-                    new_user = User(first_name=args['first_name'], second_name=args['second_name'],
-                                    email=args['email'], password=args['password'])
-
-                    if User.query.filter_by(email=args['email']).first():
-                        return {'message': 'User you are entering already exists!'}, 409
-
-                    else:
-                        if (re.match('[a-zA-Z]', args['first_name'])
-                        and re.match('[a-zA-Z]', args['second_name'])):
-                            new_user.save()
-                            return {'message': 'Successfully registered new user!'}, 201
-                        else:
-                            return {'message': 'first name or second name can not contain\
-                                        special characters or numbers!'}, 400
-
+                if (re.match('[a-zA-Z]', args['first_name'])
+                   and re.match('[a-zA-Z]', args['second_name'])):
+                    new_user.save()
+                    return {'message': 'Successfully registered new user!'}, 201
                 else:
-                    return {'message': 'Wrong email entered!'}, 400
-
+                    return {'message': 'first name or second name can not contain\
+                                        special characters or numbers!'}, 400
         except:
             return {'message': 'User not registered due to errors!'}, 400
 

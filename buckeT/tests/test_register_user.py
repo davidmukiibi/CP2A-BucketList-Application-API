@@ -64,6 +64,7 @@ class TestRegisterUser(BaseClass):
         self.assertTrue(new_data2['message'] == 'User you are entering already exists!')
 
     def test_password_length(self):
+        """testing the length of the password entered"""
         
         new_user = {
                         'first_name': 'david',

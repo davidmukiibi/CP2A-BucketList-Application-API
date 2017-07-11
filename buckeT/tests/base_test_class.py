@@ -1,5 +1,7 @@
 import unittest
-from run import app
+# from run import app
+from buckeT import app
+from buckeT.database_models import User
 from instance.config import app_config
 import json
 from buckeT import create_app, db, bucketlist, api
@@ -16,6 +18,7 @@ class BaseClass(unittest.TestCase):
         self.test_client = app.test_client()
         self.app_context = app.app_context()
         self.app_context.push()
+
         # creating testing db tables
         db.create_all()
 
@@ -24,19 +27,28 @@ class BaseClass(unittest.TestCase):
                         'first_name': 'david',
                         'second_name': 'mukiibi',
                         'email': 'david.mukiibiq@gmail.com',
-                        'password': '1234567890'
+                        'password': '12345678902'
                     }
 
         # user credentials for logging in user
-        self.login_payload = {'email': 'david.mukiibi@gmail.com',
-                        'password': '1234567890'
+        self.login_payload = {'email': 'david.mukiibiq@gmail.com',
+                        'password': '12345678902'
                     }
         self.url_prefix = '/api/v1'
 
-        print self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
+        new_user = User.query.all()
+        # print new_user
+        new_response = self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
+        checker = json.loads(new_response.data.decode('utf-8'))
+        # print checker
+        new_user = User.query.all()
+        # print new_user
+        # import ipdb; ipdb.set_trace()
         login_instance = self.test_client.post(self.url_prefix + '/auth/login/', data=self.login_payload)
         response = json.loads(login_instance.data.decode('utf-8'))
-        print response
+        # print response
+        new_user = User.query.all()
+        # print new_user
         self.token = response['token']['access_token']
 
         # creating a bucketlist
@@ -44,6 +56,7 @@ class BaseClass(unittest.TestCase):
 
         # Bucketlist item details for item creation
         self.new_bucketlist_item = {'name': 'book a flight'}
+
 
     def tearDown(self):
         """tearing down the dependencies"""
