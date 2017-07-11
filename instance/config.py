@@ -12,7 +12,7 @@ class DevelopmentConfig(Config):
     """Configurations for Development."""
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/jamaica'
-    SECRET_KEY = os.getenv('DEV_SECRET_KEY')
+    SECRET_KEY = config('DEV_SECRET_KEY')
 
 class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
