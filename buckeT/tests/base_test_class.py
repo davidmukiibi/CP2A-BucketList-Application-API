@@ -26,29 +26,19 @@ class BaseClass(unittest.TestCase):
         self.registration_payload = {
                         'first_name': 'david',
                         'second_name': 'mukiibi',
-                        'email': 'david.mukiibiq@gmail.com',
+                        'email': 'david.mukiibi@yahoo.com',
                         'password': '12345678902'
                     }
 
         # user credentials for logging in user
-        self.login_payload = {'email': 'david.mukiibiq@gmail.com',
+        self.login_payload = {'email': 'david.mukiibi@yahoo.com',
                         'password': '12345678902'
                     }
         self.url_prefix = '/api/v1'
 
-        new_user = User.query.all()
-        # print new_user
-        new_response = self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
-        checker = json.loads(new_response.data.decode('utf-8'))
-        # print checker
-        new_user = User.query.all()
-        # print new_user
-        # import ipdb; ipdb.set_trace()
+        self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
         login_instance = self.test_client.post(self.url_prefix + '/auth/login/', data=self.login_payload)
         response = json.loads(login_instance.data.decode('utf-8'))
-        # print response
-        new_user = User.query.all()
-        # print new_user
         self.token = response['token']['access_token']
 
         # creating a bucketlist
