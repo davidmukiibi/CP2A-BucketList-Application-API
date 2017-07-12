@@ -34,7 +34,7 @@ class RegisterUser(Resource):
                 return {'message': 'Second name should not be empty!'}, 400
             if not args['email']:
                 return {'message': 'Email should not be empty!'}, 400
-            if validate_email(args['email'], check_mx=True):
+            if validate_email(args['email'], check_mx=True) == False:
                 return {'message': 'Wrong email entered!'}, 400
             if not args['password']:
                 return {'message': 'Password should not be empty!'}, 400
