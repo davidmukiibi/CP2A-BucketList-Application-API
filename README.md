@@ -210,6 +210,7 @@ $ nosetests --with-coverage
 With the above command, it gives you the test coverage as well. If you do not want the coverage, do not add the
 ```--with-coverage```
 
+Note: While running tests, you should have an internet connection, else the validate email test will fail.
 With that, you will be set to go.
 
 cheers Enjoy using the API as your own.
