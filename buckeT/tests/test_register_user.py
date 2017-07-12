@@ -91,4 +91,4 @@ class TestRegisterUser(BaseClass):
         post_data = json.loads(post_response.data.decode('utf-8'))
 
         self.assertTrue(post_response.status_code, 400)
-        self.assertTrue(post_data['message'] == 'Wrong email entered!')
+        
