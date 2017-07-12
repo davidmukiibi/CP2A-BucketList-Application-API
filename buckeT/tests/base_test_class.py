@@ -34,13 +34,9 @@ class BaseClass(unittest.TestCase):
                     }
         self.url_prefix = '/api/v1'
 
-        testing = self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
-        print testing
-        decode_testing = json.loads(testing.data.decode('utf-8'))
-        print decode_testing
+        self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
         login_instance = self.test_client.post(self.url_prefix + '/auth/login/', data=self.login_payload)
         response = json.loads(login_instance.data.decode('utf-8'))
-        print response
         self.token = response['token']['access_token']
 
         # creating a bucketlist
