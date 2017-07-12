@@ -1,7 +1,6 @@
 import unittest
 # from run import app
 from buckeT import app
-from buckeT.database_models import User
 from instance.config import app_config
 import json
 from buckeT import create_app, db, bucketlist, api
@@ -36,9 +35,11 @@ class BaseClass(unittest.TestCase):
                     }
         self.url_prefix = '/api/v1'
 
-        self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
+        print self.test_client.post(self.url_prefix + '/auth/register/', data=self.registration_payload)
         login_instance = self.test_client.post(self.url_prefix + '/auth/login/', data=self.login_payload)
+        print login_instance
         response = json.loads(login_instance.data.decode('utf-8'))
+        print response
         self.token = response['token']['access_token']
 
         # creating a bucketlist
