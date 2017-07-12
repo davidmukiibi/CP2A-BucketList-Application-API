@@ -88,7 +88,4 @@ class TestRegisterUser(BaseClass):
                         'password': '123456'
                     }
         post_response = self.test_client.post(self.url_prefix + '/auth/register/', data=new_user)
-        post_data = json.loads(post_response.data.decode('utf-8'))
-
         self.assertTrue(post_response.status_code, 400)
-        
