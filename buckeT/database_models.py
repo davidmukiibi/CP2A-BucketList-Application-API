@@ -44,7 +44,7 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def get_all():
+    def get_all(self):
         return User.query.all()
 
 
@@ -77,7 +77,7 @@ class BucketList(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def get_all():
+    def get_all(self):
         return Bucketlist.query.all()
 
 
@@ -107,6 +107,6 @@ class BucketListItem(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def get_all():
+    def get_all(self):
         return BucketListItem.query.all()
 
