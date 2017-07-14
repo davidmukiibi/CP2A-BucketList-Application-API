@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>apiary</title>
+</head>
+<body>
+  <script src="https://api.apiary.io/seeds/embed.js"></script>
+  <script>
+    var embed = new Apiary.Embed({
+      apiBlueprint: "FORMAT: 1A\nHOST: http://polls.apiblueprint.org/\n\n# mybucketlist\nThis is a bucket list API built with [Flask](http://flask.pocoo.org/).\n\nThis feature rich API requires token based authentication to access all resources except login and register.\nIt also has pagination and search capabilities on the resources requested.\n\n\nThe features attached to the service include:\n* Registering a user.\n* Logging in a user.\n* Creating a new bucketlist after user authentication.\n* Creating new bucketlist items on a given bucketlist after user authentication.\n* Updating and deleting the bucketlists.\n* Updating and deleting the items.\n* Retrieving a list of all created bucketlists with their items, by a specific registered user.\n\n\n## User Authentication\n\n### Registration [/api/v1/auth/register/]\n### Register a new user [POST]\nFill in your first name, second name, email address, and password longer than 8 characters.\n\n+ Request (application/json)\n\n        {\n            \"first_name\": \"Lana\",\n            \"second_name\": \"Rose\",\n            \"email\": \"lana.rose@gmail.com\",\n            \"password\": \"1234567890\"\n        }\n\n+ Response 201 (application/json)\n\n        {\n            \"message\": \"Successfully registered new user!\"\n        }\n\n### Login [/api/v1/auth/login/]\n### Login a user [POST]\n\nUse your correct email and password combination to verify your identity.\nDo take note of the token returned on successful login as it will be required\nto access other resources.\nYou could copy it somewhere as you will need it.\n\n+ Request (application/json)\n\n        {\n            \"email\": \"lana.rose@gmail.com\",\n            \"password\": \"1234567890\"\n        }\n\n+ Response 201 (application/json)\n\n        {\n            \"message\": \"Successfully logged in\",\n            \"token\": {\n                \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2NsYWltcyI6e30sImp0aSI6IjZiZmY4NGI0LTlkMTUtNGY5My05YTNlLTk3MmMxNWIwZGQ3NyIsImV4cCI6MTQ5OTc1OTg4MiwiZnJlc2giOmZhbHNlLCJpYXQiOjE0OTk3NTg5ODIsInR5cGUiOiJhY2Nlc3MiLCJuYmYiOjE0OTk3NTg5ODIsImlkZW50aXR5IjoiZGF2aS5jcnNvQGdtYWlsLmNvbSJ9.Gc5OnsBA_xD2i8Buyc9nSKDM6WK2rnjnPl6jBLeBv2E\"\n            }\n        }\n\nThe above token is an example of what will be returned, that actual token will not work if you try using it.\n\n## Group Resources\n\n### Bucketlist Resources [/api/v1/bucketlists/]\n\n### Create a new bucketlist [POST]\nAdd a new bucketlist.\n\n+ Request (application/json)\n\n    + Headers\n\n            Authorization: Bearer \'token goes here\'\n\nMind the space between the word \'Bearer\' and the token.\n\n    + Body\n\n            {\n                \"name\": \"Go to Jamaica\"\n            }\n\n+ Response 201 (application/json)\n\n            {\n                \"message\": \"Go to Jamaica has been added to your pool of bucket                                        lists.\"\n            }\n\n### List all bucketlists [GET]\nRetrieve all bucketlists belonging to a logged in user.\nLogin first, then:\n\n+ Request (application/json)\n\n    + Headers\n\n            Authorization: Bearer \'token goes here\'\n\n+ Response 200 (application/json)\n\n            [\n                {\n                    \"buckets\": [\n                        {\n                            \"created_by\": \"davi.crso@gmail.com\",\n                            \"date_created\": \"Tue, 11 Jul 2017 12:33:54 GMT\",\n                            \"date_modified\": \"Tue, 11 Jul 2017 12:33:54 GMT\",\n                            \"id\": 22,\n                            \"items\": [],\n                            \"name\": \"Go to Jamaica\"\n                        }\n                    ]\n                },\n                200\n            ]\n\n\n### Single BucketList retrieval [/api/v1/bucketlists/ID]\n\nThe Id must be an integer.\n\n## Get a single bucketlist[GET]\n\n+ Parameters\n\n    + <int:ID> (integer) - ID of the required bucketlist\n\n+ Request (application/json)\n\n    + Headers\n\n            Authorization: Bearer \"token goes here\"\n\n+ Response 200 (application/json)\n\n            [\n                {\n                  \"bucket list\": {\n                      \"created_by\": \"davi.crso@gmail.com\",\n                      \"date_created\": \"Tue, 11 Jul 2017 12:33:54 GMT\",\n                      \"date_modified\": \"Tue, 11 Jul 2017 12:33:54 GMT\",\n                      \"id\": 22,\n                      \"items\": [],\n                      \"name\": \"Go to Jamaica\"\n                  }\n                  },\n            200\n            ]\n\n## Update a single bucketlist[PUT] [/api/v1/bucketlists/ID]\n+ Parameters\n\n    + <int:ID> (integer) - ID of the required bucketlist to edit\n\n+ Request (application/json)\n\n    + Headers\n\n            Authorization: Bearer \"token goes here\"\n\n    + Body\n\n            {\n                \"name\": \"Go to America\",\n            }\n\n+ Response 201 (application/json)\n\n            {\n            \"message\": \"Bucket list edit successful\"\n            }\n\n\n## Delete a bucketlist[DELETE] [/api/v1/bucketlists/ID]\n+ Parameters\n\n    + <int:ID> (integer) - ID of the required bucketlist to delete\n\n+ Request (application/json)\n\n    + Headers\n\n            Authorization: Bearer \"token goes here\"\n\n+ Response 200 (application/json)\n\n        {\n        \"message\": \"Bucketlist deleted successfully\"\n        }\n\n### BucketList Item creation [/bucketlist/ID/items/]\n\n## Add a new bucketlist item [POST]\n\n+ Parameters\n\n    + <int:ID> (integer) - ID of the required bucketlist to add an item to.\n\n+ Request (application/json)\n\n    + Headers\n\n            Authorization: Bearer \"token goes here\"\n\n    + Body\n\n            {\n                \"name\": \"collect money first\"\n            }\n\n+ Response 201 (application/json)\n\n            {\n            \"message\": \"Item saved successfully.\"\n            }\n\n### BucketListItem manipulation [/bucketlist/ID/items/ID_item]\n/bucketlist/ID/items/\n\nYou can update or delete the items created as you wish.\nHandy for when you finally want to cross something off your bucketlist.\n\n+ Parameters\n\n    + ID (integer) - ID of the required bucketlist to add to.\n    + ID_item (integer) - ID of the required bucketlist item to work with\n\n## Update a Bucketlist item [PUT]\n\n+ Request (application/json)\n\n    + Headers\n\n            Authorization: Bearer \"token goes here\"\n\n    + Body\n\n            {\n                \"name\": \"look for more money\"\n            }\n\n+ Response 201 (application/json)\n\n            {\n            \"message\": \"Item edited successfully.\"\n            }\n\n## Delete a bucketlist item [DELETE]\n\n+ Request (application/json)\n\n    + Headers\n\n            Authorization: Bearer \"token goes here\"\n\n+ Response 200 (application/json)\n\n            {\n            \"message\": \"Item has been deleted successfully!\"\n            }\n"
+    });
+
+    if (false) {
+        var changed = null
+        var xhrChanged = new XMLHttpRequest();
+        var xhrData = new XMLHttpRequest();
+        setInterval(function() {
+            xhrChanged.open('GET', window.location.href + "/changed", true);
+            xhrChanged.send();
+
+            xhrChanged.onreadystatechange = function() {
+                if (xhrChanged.readyState == 4 && xhrChanged.status == 200) {
+                    if (!changed) {
+                        changed = xhrChanged.responseText
+                    }
+                    if (changed != xhrChanged.responseText) {
+                        changed = xhrChanged.responseText
+                        xhrData.open('GET', window.location.href + "/source", true);
+                        xhrData.send();
+
+                        xhrData.onreadystatechange = function() {
+                            if (xhrData.readyState == 4 && xhrData.status == 200) {
+                                embed.iframeElement.contentWindow.postMessage({"origin": embed.ORIGIN, "eventType": "anonymousPreview", "data": {"code": xhrData.responseText}}, '*');
+                            }
+                        }
+                    }
+                }
+            }
+        }, 1000);
+    }
+  </script>
+</body>
+</html>
