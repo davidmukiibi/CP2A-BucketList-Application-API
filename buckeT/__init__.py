@@ -3,6 +3,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from instance.config import app_config
 from flask_jwt_extended import JWTManager
+import os
 
 
 db = SQLAlchemy()
@@ -21,5 +22,5 @@ def create_app(config_name):
         return render_template("index.html")
     return app
 
-app = create_app('development')
+app = create_app(os.getenv('APP_SETTING'))
 api = Api(app=app, prefix='/api/v1')
