@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, json
 from flask_restful import Resource, reqparse
-from database_models import User, BucketList, BucketListItem
+from .database_models import User, BucketList, BucketListItem
 from buckeT import db, app
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import re
