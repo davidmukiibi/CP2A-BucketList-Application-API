@@ -123,7 +123,7 @@ Login first, then:
             ]
 
 
-### Single BucketList retrieval [/api/v1/bucketlists/ID]
+### Single BucketList retrieval [/api/v1/bucketlists/<int:ID>]
 
 The Id must be an integer.
 
@@ -155,7 +155,7 @@ The Id must be an integer.
             200
             ]
 
-## Update a single bucketlist[PUT] [/api/v1/bucketlists/ID]
+## Update a single bucketlist[PUT] [/api/v1/bucketlists/<int:ID>]
 + Parameters
 
     + <int:ID> (integer) - ID of the required bucketlist to edit
@@ -179,7 +179,7 @@ The Id must be an integer.
             }
 
 
-## Delete a bucketlist[DELETE] [/api/v1/bucketlists/ID]
+## Delete a bucketlist[DELETE] [/api/v1/bucketlists/<int:ID>]
 + Parameters
 
     + <int:ID> (integer) - ID of the required bucketlist to delete
@@ -196,7 +196,7 @@ The Id must be an integer.
         "message": "Bucketlist deleted successfully"
         }
 
-### BucketList Item creation [/bucketlist/ID/items/]
+### BucketList Item creation [/bucketlist/<int:ID>/items/]
 
 ## Add a new bucketlist item [POST]
 
@@ -222,8 +222,7 @@ The Id must be an integer.
             "message": "Item saved successfully."
             }
 
-### BucketListItem manipulation [/bucketlist/ID/items/ID_item]
-/bucketlist/ID/items/
+### BucketListItem manipulation [/bucketlist/<int:ID_bucket>/items/<int:ID_item>]
 
 You can update or delete the items created as you wish.
 Handy for when you finally want to cross something off your bucketlist.
