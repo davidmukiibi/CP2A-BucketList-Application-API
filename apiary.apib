@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: https://bucketlistheroku.herokuapp.com
+HOST: https://bucketlistheroku.herokuapp.com/
 
 # mybucketlist
 This is a bucket list API built with [Flask](http://flask.pocoo.org/).
@@ -20,7 +20,7 @@ The features attached to the service include:
 
 ## User Authentication
 
-### Registration [/api/v1/auth/register/]
+### Registration [api/v1/auth/register/]
 ### Register a new user [POST]
 Fill in your first name, second name, email address, and password longer than 8 characters.
 
@@ -39,7 +39,7 @@ Fill in your first name, second name, email address, and password longer than 8 
             "message": "Successfully registered new user!"
         }
 
-### Login [/api/v1/auth/login/]
+### Login [api/v1/auth/login/]
 ### Login a user [POST]
 
 Use your correct email and password combination to verify your identity.
@@ -67,7 +67,7 @@ The above token is an example of what will be returned, that actual token will n
 
 ## Group Resources
 
-### Bucketlist Resources [/api/v1/bucketlists/]
+### Bucketlist Resources [api/v1/bucketlists/]
 
 ### Create a new bucketlist [POST]
 
@@ -123,7 +123,7 @@ Login first, then:
             ]
 
 
-### Single BucketList retrieval [/api/v1/bucketlists/<int:ID>]
+### Single BucketList retrieval [api/v1/bucketlists/<int:ID>]
 
 The Id must be an integer.
 
@@ -155,7 +155,7 @@ The Id must be an integer.
             200
             ]
 
-## Update a single bucketlist[PUT] [/api/v1/bucketlists/<int:ID>]
+## Update a single bucketlist[PUT] [api/v1/bucketlists/<int:ID>]
 + Parameters
 
     + <int:ID> (integer) - ID of the required bucketlist to edit
@@ -179,7 +179,7 @@ The Id must be an integer.
             }
 
 
-## Delete a bucketlist[DELETE] [/api/v1/bucketlists/<int:ID>]
+## Delete a bucketlist[DELETE] [api/v1/bucketlists/<int:ID>]
 + Parameters
 
     + <int:ID> (integer) - ID of the required bucketlist to delete
@@ -196,7 +196,7 @@ The Id must be an integer.
         "message": "Bucketlist deleted successfully"
         }
 
-### BucketList Item creation [/bucketlist/<int:ID>/items/]
+### BucketList Item creation [bucketlist/<int:ID>/items/]
 
 ## Add a new bucketlist item [POST]
 
@@ -222,7 +222,7 @@ The Id must be an integer.
             "message": "Item saved successfully."
             }
 
-### BucketListItem manipulation [/bucketlist/<int:ID_bucket>/items/<int:ID_item>]
+### BucketListItem manipulation [bucketlist/<int:ID_bucket>/items/<int:ID_item>]
 
 You can update or delete the items created as you wish.
 Handy for when you finally want to cross something off your bucketlist.
