@@ -8,6 +8,7 @@ class Config(object):
     SECRET = os.getenv('SECRET')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
+# add comment
 class DevelopmentConfig(Config):
     """Configurations for Development."""
     DEBUG = True
