@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from instance.config import app_config
@@ -16,6 +16,9 @@ def create_app(config_name):
     db.init_app(app)
     jwt.init_app(app)
 
+    @app.route('/')
+    def index():
+        return render_template("index.html")
     return app
 
 app = create_app('development')
