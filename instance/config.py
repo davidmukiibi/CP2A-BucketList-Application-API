@@ -5,6 +5,7 @@ class Config(object):
     """Parent configuration class."""
     DEBUG = False
     CSRF_ENABLED = True
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     SECRET = os.getenv('SECRET')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
