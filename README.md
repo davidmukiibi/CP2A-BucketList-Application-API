@@ -21,16 +21,16 @@ The API is deveoped in flask with help from FlaskRestful.
 
 |Method | Endpoint | Usage |
 | ---- | ---- | --------------- |
-|POST| `/api/bucketlist/v1/auth/register/` |  Registering a user. |
-|POST| `/api/bucketlist/v1/auth/login/` | Logging in a user.|
-|POST| `/api/bucketlist/v1/bucketlists/` | Creates a new bucketlist. |
-|POST| `/api/bucketlist/v1/bucketlists/<int:ID>/items/` | Adds a new item to the given bucketlist with the give ID. |
-|GET| `/api/bucketlist/v1/bucketlists/` | Retrieves all the created bucketlists created by a given user. |
-|GET| `/api/bucketlist/v1/bucketlists/<int:ID>` | Get a single bucketlist of the given ID. |
-|GET| `/api/bucketlist/v1/bucketlists?limit=` | This Paginates the results to get the required number of bucketllists.|
-|GET| `/api/bucketlist/v1/bucketlists?q=` | Searches through bucketlists with the given word given for the q value.
-|PUT| `/api/bucketlist/v1/bucketlists/<int:ID>` | Updates a single bucketlist of the given ID. |
-|DELETE|`/api/bucketlist/v1/bucketlists/<int:ID>` | Deletes a single bucketlist of the give ID. |
+|POST| `/api/v1/auth/register/` |  Registering a user. |
+|POST| `/api/v1/auth/login/` | Logging in a user.|
+|POST| `/api/v1/bucketlists/` | Creates a new bucketlist. |
+|POST| `/api/v1/bucketlists/<int:ID>/items/` | Adds a new item to the given bucketlist with the give ID. |
+|GET| `/api/v1/bucketlists/` | Retrieves all the created bucketlists created by a given user. |
+|GET| `/api/v1/bucketlists/<int:ID>` | Get a single bucketlist of the given ID. |
+|GET| `/api/v1/bucketlists?limit=` | This Paginates the results to get the required number of bucketllists.|
+|GET| `/api/v1/bucketlists?q=` | Searches through bucketlists with the given word given for the q value.
+|PUT| `/api/v1/bucketlists/<int:ID>` | Updates a single bucketlist of the given ID. |
+|DELETE|`/api/v1/bucketlists/<int:ID>` | Deletes a single bucketlist of the give ID. |
 
 ## With that, now we can start the installation.
 
