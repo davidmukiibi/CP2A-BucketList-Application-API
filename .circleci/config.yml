@@ -11,8 +11,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-
 
       - run:
           name: install dependencies
@@ -41,16 +41,14 @@ jobs:
           DEV_SECRET_KEY: SECRETKEY
           APP_SETTING: development 
 
-      
-
     working_directory: ~/app
 
     steps:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-
 
       - run:
          name: confirm postgres is up
