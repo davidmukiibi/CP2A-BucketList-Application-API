@@ -51,6 +51,23 @@ jobs:
           - v1-dependencies-
 
       - run:
+         name: confirm postgres is up
+         command: |
+           count=0
+           while [ $count -lt 12 ] ; do
+              if exec 10<>/dev/tcp/127.0.0.1/5432; then
+                echo "Hey, postgres is up"
+                break
+              fi
+              sleep 5
+              count=$((count + 1))
+           done
+           if [ $count -eq 12 ]; then
+             echo "Postgress is still down!"
+             exit 1
+           fi
+
+      - run:
           name: run tests
           command: |
             source venv/bin/activate
