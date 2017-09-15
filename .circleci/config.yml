@@ -39,7 +39,7 @@ jobs:
           TODO_ENV: testing
           DATABASE_URL: postgresql://postgres@localhost/test_database
           DEV_SECRET_KEY: SECRETKEY
-          APP_SETTING: development
+          APP_SETTING: development 
 
       
 
