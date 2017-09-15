@@ -28,18 +28,20 @@ jobs:
 
   test:
     docker:
-      - image: circleci/python:2.7.13
-        environment:
-          TODO_ENV: testing
-          DATABASE_URL: postgresql://postgres@localhost/todo_test
-          DEV_SECRET_KEY: SECRETKEY
-          APP_SETTING: development
-
       - image: circleci/postgres:9.4-alpine
         environment:
           POSTGRES_USER: postgres
-          POSTGRES_DB: test_db
+          POSTGRES_DB: test_database
           POSTGRES_PASSWORD: ""
+
+      - image: circleci/python:2.7.13
+        environment:
+          TODO_ENV: testing
+          DATABASE_URL: postgresql://postgres@localhost/test_database
+          DEV_SECRET_KEY: SECRETKEY
+          APP_SETTING: development
+
+      
 
     working_directory: ~/app
 
