@@ -12,7 +12,6 @@ jobs:
       - restore_cache:
           keys:
             - dependencies-{{ checksum "requirements.txt" }}
-            - dependencies-
 
       - run:
           name: install dependencies
@@ -48,7 +47,6 @@ jobs:
       - restore_cache:
           keys:
             - dependencies-{{ checksum "requirements.txt" }}
-            - dependencies-
 
       - run:
          name: confirm postgres is up
