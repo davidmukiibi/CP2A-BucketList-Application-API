@@ -22,9 +22,7 @@ jobs:
       - save_cache:
           paths:
             - ./venv
-          keys: 
-              - dependencies-{{ checksum "requirements.txt" }}
-              - dependencies-
+          key: dependencies-{{ checksum "requirements.txt" }}
 
   test:
     docker:
