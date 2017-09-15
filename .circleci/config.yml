@@ -45,8 +45,11 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          paths:
+            - ./venv
           keys:
             - dependencies-{{ checksum "requirements.txt" }}
+
 
       - run:
          name: confirm postgres is up
