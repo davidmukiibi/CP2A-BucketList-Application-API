@@ -10,6 +10,7 @@ jobs:
       - restore_cache:
           keys:
             - dependencies-{{ checksum "requirements.txt" }}
+            - dependencies-
 
       - run:
           name: install dependencies
@@ -21,7 +22,9 @@ jobs:
       - save_cache:
           paths:
             - ./venv
-          key: dependencies-{{ checksum "requirements.txt" }}
+          keys: 
+              - dependencies-{{ checksum "requirements.txt" }}
+              - dependencies-
 
   test:
     docker:
