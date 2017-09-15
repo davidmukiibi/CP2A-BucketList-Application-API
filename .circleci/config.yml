@@ -33,6 +33,7 @@ jobs:
           TODO_ENV: testing
           DATABASE_URL: postgresql://circleci@localhost/todo_test
           DEV_SECRET_KEY: SECRETKEY
+          APP_SETTING: development
 
       - image: circleci/postgres:9.4-alpine
         environment:
