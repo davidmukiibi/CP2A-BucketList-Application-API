@@ -39,6 +39,13 @@ jobs:
     steps:
       - checkout
       - run:
+          name: enter virtual env
+          command: |
+            . venv/bin/activate
+      - restore_cache:
+          key: dependencies-{{ checksum "requirements.txt" }}
+
+      - run:
          name: confirm postgres is up
          command: |
            count=0
