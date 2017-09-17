@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/python:2.7.13
-    working_directory: ~/app
+    working_directory: ~/checkpointII
 
     steps:
       - checkout
@@ -16,13 +16,14 @@ jobs:
           name: install dependencies
           command: |
             virtualenv venv
-            source venv/bin/activate
+            . venv/bin/activate
             pip install -r requirements.txt
 
       - save_cache:
-          paths:
-            - ./venv
           key: dependencies-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"
+          
 
   test:
     docker:
@@ -39,13 +40,11 @@ jobs:
           DEV_SECRET_KEY: SECRETKEY
           APP_SETTING: development 
 
-    working_directory: ~/app
+    working_directory: ~/checkpointII
 
     steps:
       - checkout
       - restore_cache:
-          paths:
-            - ./venv
           keys:
             - dependencies-{{ checksum "requirements.txt" }}
             - dependencies-
@@ -71,7 +70,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            source venv/bin/activate
+            . venv/bin/activate
             nosetests
 
 
