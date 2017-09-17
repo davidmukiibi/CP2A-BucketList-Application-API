@@ -38,16 +38,16 @@ jobs:
 
     steps:
       - checkout
-      name: install dependencies
+      - run:
+          name: install dependencies
           command: |
             virtualenv venv
             . venv/bin/activate
             pip install -r requirements.txt
 
-
       - run:
-         name: confirm postgres is up
-         command: |
+          name: confirm postgres is up
+          command: |
            count=0
            while [ $count -lt 12 ] ; do
               if exec 10<>/dev/tcp/127.0.0.1/5432; then
