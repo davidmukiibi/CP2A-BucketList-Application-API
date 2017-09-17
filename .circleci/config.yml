@@ -1,17 +1,12 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/checkpointII
     docker:
       - image: circleci/python:2.7.13
-    working_directory: ~/checkpointII
 
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - dependencies-{{ checksum "requirements.txt" }}
-            - dependencies-
-
       - run:
           name: install dependencies
           command: |
@@ -26,6 +21,7 @@ jobs:
           
 
   test:
+    working_directory: ~/checkpointII
     docker:
       - image: circleci/postgres:9.4-alpine
         environment:
@@ -38,16 +34,12 @@ jobs:
           TODO_ENV: testing
           DATABASE_URL: postgresql://postgres@localhost/test_database
           DEV_SECRET_KEY: SECRETKEY
-          APP_SETTING: development 
-
-    working_directory: ~/checkpointII
+          APP_SETTING: development
 
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - dependencies-{{ checksum "requirements.txt" }}
-            - dependencies-
+          key: dependencies-{{ checksum "requirements.txt" }}
 
 
       - run:
