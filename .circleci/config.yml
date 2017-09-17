@@ -24,12 +24,14 @@ jobs:
     working_directory: ~/checkpointII
     docker:
       - image: circleci/python:2.7.13
+        environment: 
+            DEV_SECRET_KEY: SECRET
       - image: circleci/postgres:9.4-alpine
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: test_database
           POSTGRES_PASSWORD: ""
-          DEV_SECRET_KEY: SECRET
+          
 
       - image: circleci/python:2.7.13
         environment:
