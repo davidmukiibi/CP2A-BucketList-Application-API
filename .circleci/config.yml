@@ -42,6 +42,7 @@ jobs:
     working_directory: ~/app
 
     steps:
+      - checkout
       - restore_cache:
           paths:
             - ./venv
