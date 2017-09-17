@@ -38,12 +38,12 @@ jobs:
 
     steps:
       - checkout
-      - run:
-          name: enter virtual env
+      name: install dependencies
           command: |
+            virtualenv venv
             . venv/bin/activate
-      - restore_cache:
-          key: dependencies-{{ checksum "requirements.txt" }}
+            pip install -r requirements.txt
+
 
       - run:
          name: confirm postgres is up
