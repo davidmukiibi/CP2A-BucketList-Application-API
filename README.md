@@ -1,9 +1,7 @@
 # BucketList API in Flask microframework.
 
 [![David Mukiibi](https://img.shields.io/badge/DAVID%20MUKIIBI-BUCKETLIST%20API-green.svg)]()
-[![Build Status](https://travis-ci.org/davidmukiibi/CP2A-BucketList-Application-API.svg?branch=develop)](https://travis-ci.org/davidmukiibi/CP2A-BucketList-Application-API)
 [![Coverage Status](https://coveralls.io/repos/github/davidmukiibi/CP2A-BucketList-Application-API/badge.svg?branch=develop)](https://coveralls.io/github/davidmukiibi/CP2A-BucketList-Application-API?branch=develop)
-[![Code Issues](https://www.quantifiedcode.com/api/v1/project/7128968e82554cbea00236401ffbf49d/badge.svg)](https://www.quantifiedcode.com/app/project/7128968e82554cbea00236401ffbf49d)
 [![CircleCI](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser.svg)]()
 
 API Documentation: http://docs.mybucketlist1.apiary.io/#reference/0/login/login-a-user?console=1
