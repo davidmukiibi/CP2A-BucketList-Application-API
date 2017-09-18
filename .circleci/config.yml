@@ -18,7 +18,7 @@ jobs:
           name: install dependencies
           command: |
             pip install virtualenv
-            pip install virtualenvwrapper
+            sudo pip install -y virtualenvwrapper
             export WORKON_HOME=~/Envs
             source /usr/local/bin/virtualenvwrapper.sh
             mkvirtualenv venv
