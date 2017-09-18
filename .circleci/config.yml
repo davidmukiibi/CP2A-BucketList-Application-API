@@ -18,8 +18,9 @@ jobs:
           name: install dependencies
           command: |
             virtualenv venv
-            . venv/bin/activate
+            source venv/bin/activate
             pip install -r requirements.txt
+
       - save_cache:
           paths:
             - ./venv
@@ -71,7 +72,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
+            source venv/bin/activate
             nosetests --with-coverage
       - store_artifacts:
           path: reports
