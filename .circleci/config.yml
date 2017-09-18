@@ -18,11 +18,9 @@ jobs:
           name: install dependencies
           command: |
             pip install virtualenv
-            sudo pip install virtualenvwrapper
             export WORKON_HOME=~/Envs
-            source /usr/local/bin/virtualenvwrapper.sh
-            mkvirtualenv venv
-            workon venv
+            virtualenv -p /usr/bin/python2.7 venv
+            source venv/bin/activate
             pip install -r requirements.txt
 
       - save_cache:
@@ -74,7 +72,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            workon venv
+            source venv/bin/activate
             nosetests --with-coverage
       - store_artifacts:
           path: reports
