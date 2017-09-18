@@ -26,7 +26,7 @@ jobs:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
   test:
-
+    working_directory: ~/checkpointII
     docker:
       - image: circleci/python:2.7.13
         environment:
@@ -40,8 +40,6 @@ jobs:
           POSTGRES_DB: circlecidb
           POSTGRES_USER: circleci
           POSTGRES_PASSWORD: ''
-
-    working_directory: ~/checkpointII
 
     steps:
       - checkout
@@ -72,7 +70,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            # source venv/bin/activate
+            source venv/bin/activate
             nosetests --with-coverage
       - store_artifacts:
           path: reports
