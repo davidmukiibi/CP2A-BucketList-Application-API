@@ -1,57 +1,59 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/checkpointII
     docker:
       - image: circleci/python:2.7.13
 
+    working_directory: ~/checkpointII
+
     steps:
       - checkout
+      - restore_cache:
+          keys:
+              - v1-dependencies-{{ checksum "requirements.txt" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+
       - run:
           name: install dependencies
           command: |
-            virtualenv venv
+            python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-
       - save_cache:
-          key: dependencies-{{ checksum "requirements.txt" }}
           paths:
-            - "venv"
-          
-
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
   test:
-    working_directory: ~/checkpointII
+
     docker:
       - image: circleci/python:2.7.13
-        environment: 
-            DEV_SECRET_KEY: SECRET
-      - image: circleci/postgres:9.4-alpine
         environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: test_database
-          POSTGRES_PASSWORD: ""
-          
+         APP_SETTINGS: testing
+         DATABASE_URL: postgresql://circleci@localhost/circlecidb
+         DEV_SECRET_KEY: SECRETKEY
+         APP_SETTING: development
 
-      - image: circleci/python:2.7.13
+      - image: circleci/postgres:9.6
         environment:
-          TODO_ENV: testing
-          DATABASE_URL: postgresql://postgres@localhost/test_database
-          DEV_SECRET_KEY: SECRETKEY
-          APP_SETTING: development
+          POSTGRES_DB: circlecidb
+          POSTGRES_USER: circleci
+          POSTGRES_PASSWORD: ''
+
+    working_directory: ~/checkpointII
 
     steps:
       - checkout
-      - run:
-          name: install dependencies
-          command: |
-            virtualenv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
+      - run: mkdir reports
+      - restore_cache:
+          keys:
+              - v1-dependencies-{{ checksum "requirements.txt" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
 
       - run:
-          name: confirm postgres is up
-          command: |
+         name: confirm postgres is up
+         command: |
            count=0
            while [ $count -lt 12 ] ; do
               if exec 10<>/dev/tcp/127.0.0.1/5432; then
@@ -62,16 +64,18 @@ jobs:
               count=$((count + 1))
            done
            if [ $count -eq 12 ]; then
-             echo "Postgress is still down!"
+             echo "Postgres is still down!"
              exit 1
            fi
-
+      # run tests!
       - run:
           name: run tests
           command: |
             . venv/bin/activate
-            nosetests
-
+            nosetests --with-coverage
+      - store_artifacts:
+          path: reports
+          destination: reports
 
 workflows:
   version: 2
