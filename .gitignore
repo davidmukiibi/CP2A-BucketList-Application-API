@@ -6,6 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
+.env
 # Distribution / packaging
 .Python
 env/
@@ -55,7 +56,6 @@ coverage.xml
 local_settings.py
 
 # Flask stuff:
-instance/
 .webassets-cache
 
 # Scrapy stuff:
@@ -79,9 +79,6 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# dotenv
-.env
-
 # virtualenv
 .venv
 venv/
@@ -99,3 +96,18 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+alembic.ini
+/alembic
+run.pyc
+buckeT/__pycache__
+buckeT/database_models.pyc
+buckeT/bucketlist.pyc
+buckeT/__init__.pyc
+buckeT/tests/__init__.pyc
+buckeT/tests/base_test_class.pyc
+buckeT/tests/test_bucketlist.pyc
+buckeT/tests/test_login_user.pyc
+buckeT/tests/test_register_user.pyc
+buckeT/.DS_Store
+.DS_Store

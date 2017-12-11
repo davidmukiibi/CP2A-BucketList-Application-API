@@ -1,0 +1,24 @@
+language: python
+
+python:
+  - "2.7.13"
+cache: pip
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install nose
+  - pip install coverage
+
+before_script:
+  - sudo -u postgres createdb test_database
+
+# command to run the tests
+script:
+  - nosetests --with-coverage
+
+after_script:
+  - sudo -u postgres dropdb test_database
+
+after_success:
+  - coveralls
